@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('statistics', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('short_link_id')->unsigned()->index();
-            $table->ipAddress('visitor');
+            $table->ipAddress();
             $table->timestamps();
 
-            $table->foreign('short_links_id')->references('id')->on('short_links')->onDelete('cascade');
+            $table->foreign('short_link_id')->references('id')->on('short_links')->onDelete('cascade');
         });
     }
 

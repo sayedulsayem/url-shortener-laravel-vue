@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 
@@ -26,6 +27,7 @@ class UserController extends Controller {
             'name' => $validatedData['name'],
             'username' => $validatedData['username'],
             'email' => $validatedData['email'],
+            'email_verified_at' => Carbon::now(),
             'password' => Hash::make($validatedData['password']),
         ]);
 

@@ -22,43 +22,23 @@ class ShortLinkController extends Controller {
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create() {
-        //
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(Request $request, $code) {
-        $tiny_url = ShortLink::where('code', $code)->first();
+        $shortLink = ShortLink::where('code', $code)->first();
 
-        if(!$tiny_url){
+        if(!$shortLink){
             return Redirect::back()->with([
                 'message' => 'Cannot find element with code short ' . $code
             ], 404);
         }
 
-        $statistic = new Statistic(['visitor' => $request->ip()]);
+        Statistic::create([
+            'short_link_id' => $shortLink->id,
+            'ip_address' => $request->ip()
+        ]);
 
-        $tiny_url->statistics()->save($statistic);
-
-        return Redirect::away($tiny_url->url);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(ShortLink $shortLink) {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, ShortLink $shortLink) {
-        //
+        return Redirect::away($shortLink->url);
     }
 
     /**
@@ -86,9 +66,6 @@ class ShortLinkController extends Controller {
         $validatedData = $request->validate([
             'url' => 'required|url|unique:short_links',
         ]);
-
-        $result = LaravelSafeBrowsing::isSafeUrl($validatedData['url'],true);
-        return ($result === true)? 'safe': 'unsafe';
 
         ShortLink::create([
             'user_id' => $user->id,

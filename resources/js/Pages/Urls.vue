@@ -124,6 +124,7 @@ const deleteUrl = (id) => {
                 </span>
               </td>
             </tr>
+            <tr v-if="urls.length <= 0"><td class="px-4 py-3 text-center" colspan="4">No data found.</td></tr>
           </tbody>
         </table>
       </div>

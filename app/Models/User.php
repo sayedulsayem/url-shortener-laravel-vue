@@ -44,7 +44,7 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function shortlinks() {
+    public function shortLinks() {
         return $this->hasMany(ShortLink::class);
     }
 }

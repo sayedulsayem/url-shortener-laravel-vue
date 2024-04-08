@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -14,22 +16,20 @@ use Inertia\Inertia;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 Route::get('/', function () {
     return Inertia::render('Home');
 })->name('home');
 
-Route::get('/login', function () {
-    return Inertia::render('Login');
-})->name('login');
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [UserController::class, 'getLoginPage'])->name('login');
+    Route::post('/login', [UserController::class, 'login'])->name('login');
 
-Route::get('/register', function () {
-    return Inertia::render('Register');
-})->name('register');
+    Route::get('/register', [UserController::class, 'getRegisterPage'])->name('register');
+    Route::post('/register', [UserController::class, 'register'])->name('register');
+});
 
-Route::get('/users/dashboard', function () {
-    return Inertia::render('users/Dashboard');
-})->name('users/dashboard');
+Route::middleware('auth')->group(function () {
+    Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+
+    Route::get('/users/dashboard', [DashboardController::class, 'getDashBoard'])->name('users/dashboard');
+});

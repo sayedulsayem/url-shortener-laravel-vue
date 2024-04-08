@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ShortLinkController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -28,6 +29,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
     Route::get('/', [DashboardController::class, 'getDashBoard'])->name('home');
-    Route::get('/urls', [DashboardController::class, 'getUrls'])->name('urls');
+    Route::get('/urls', [ShortLinkController::class, 'index'])->name('urls.index');
+    Route::post('/urls', [ShortLinkController::class, 'store'])->name('urls.store');
+    Route::delete('/urls/{id}', [ShortLinkController::class, 'destroy'])->name('urls.destroy');
     Route::get('/profile', [DashboardController::class, 'getProfile'])->name('profile');
 });
+
+Route::get('/{code}', [ShortLinkController::class, 'show'])->name('show');

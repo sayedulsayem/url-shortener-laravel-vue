@@ -3,13 +3,14 @@ import { reactive } from "vue";
 import { Link, Head, useForm, usePage } from "@inertiajs/inertia-vue3";
 
 const form = useForm({
-  email: "sayedulsayem@gmail.com",
-  password: "sayedul",
-  remember: true,
+  email: "",
+  password: "",
+  remember: false,
 });
 
 const login = () => {
   form.post("/login");
+  form.reset();
 };
 </script>
 <template>

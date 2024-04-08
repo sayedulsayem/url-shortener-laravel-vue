@@ -2,22 +2,16 @@
 import { Link, Head, useForm } from "@inertiajs/inertia-vue3";
 
 const form = useForm({
-  name: "sayem",
-  username: "sayem",
-  email: "sayem@gmail.com",
-  password: "sayem",
-  password_confirmation: "sayem",
+  name: "",
+  username: "",
+  email: "",
+  password: "",
+  password_confirmation: "",
 });
-// const form = useForm({
-//   name: "",
-//   username: "",
-//   email: "",
-//   password: "",
-//   password_confirmation: "",
-// });
 
 const register = () => {
   form.post("/register");
+  form.reset();
 };
 </script>
 <template>

@@ -1,7 +1,6 @@
 <script setup>
 import { reactive } from "vue";
 import { Link, Head, useForm, usePage } from "@inertiajs/inertia-vue3";
-import Header from "./common/Header.vue";
 
 const form = useForm({
   email: "sayedulsayem@gmail.com",
@@ -20,7 +19,7 @@ const login = () => {
       <div class="flex justify-center my-10">
         <img
           width="180"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+          src="logo.svg"
           alt="Logo"
         />
       </div>

@@ -35,23 +35,7 @@ class UserController extends Controller {
     public function getLoginPage() {
         return Inertia::render('Login');
     }
-
-    public function loginWithRemember(Request $request) {
-        $validatedData = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-            'remember' => 'boolean',
-        ]);
-        $remember = $validatedData['remember'] ?? false;
-        if (Auth::attempt(['email' => $validatedData['email'], 'password' => $validatedData['password']], $remember)) {
-            $request->session()->regenerate();
-            return redirect()->intended('/users/dashboard');
-        }
-        return Redirect::back()->with([
-            'message' => 'Invalid login credentials'
-        ], 422);
-    }
-
+    
     public function login(Request $request) {
         $validatedData = $request->validate([
             'email' => 'required|email',
@@ -63,7 +47,7 @@ class UserController extends Controller {
 
         if (Auth::attempt(['email' => $validatedData['email'], 'password' => $validatedData['password']], $remember)) {
             $request->session()->regenerate();
-            return redirect()->intended('/users/dashboard');
+            return redirect()->intended('/');
         }
 
         return Redirect::back()->with([

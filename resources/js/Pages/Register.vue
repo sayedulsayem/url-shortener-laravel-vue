@@ -1,6 +1,5 @@
 <script setup>
 import { Link, Head, useForm } from "@inertiajs/inertia-vue3";
-import Header from "./common/Header.vue";
 
 const form = useForm({
   name: "sayem",
@@ -28,7 +27,7 @@ const register = () => {
       <div class="flex justify-center my-10">
         <img
           width="180"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+          src="logo.svg"
           alt="Logo"
         />
       </div>

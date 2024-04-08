@@ -16,10 +16,6 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Home');
-})->name('home');
-
 Route::middleware('guest')->group(function () {
     Route::get('/login', [UserController::class, 'getLoginPage'])->name('login');
     Route::post('/login', [UserController::class, 'login'])->name('login');
@@ -31,5 +27,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
-    Route::get('/users/dashboard', [DashboardController::class, 'getDashBoard'])->name('users/dashboard');
+    Route::get('/', [DashboardController::class, 'getDashBoard'])->name('home');
+    Route::get('/urls', [DashboardController::class, 'getUrls'])->name('urls');
+    Route::get('/profile', [DashboardController::class, 'getProfile'])->name('profile');
 });

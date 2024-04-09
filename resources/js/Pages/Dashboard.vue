@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { Link, Head, usePage } from "@inertiajs/inertia-vue3";
+import { Link } from "@inertiajs/inertia-vue3";
 import icons from "../utilities/icons";
 import fn from "../utilities/functions";
 import Layout from "../components/Layout.vue";

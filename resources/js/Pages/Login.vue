@@ -1,6 +1,5 @@
 <script setup>
-import { reactive } from "vue";
-import { Link, Head, useForm, usePage } from "@inertiajs/inertia-vue3";
+import { Link, Head, useForm } from "@inertiajs/inertia-vue3";
 
 const form = useForm({
   email: "",

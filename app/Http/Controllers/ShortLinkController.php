@@ -7,6 +7,7 @@ use App\Models\Statistic;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use App\Services\GoogleSafeBrowsingService;
 use Inertia\Inertia;
 
 class ShortLinkController extends Controller {
@@ -104,6 +105,16 @@ class ShortLinkController extends Controller {
         $validatedData = $request->validate([
             'url' => 'required|url|unique:short_links',
         ]);
+
+        $safeBrowsingService = new GoogleSafeBrowsingService();
+        $isSafe = $safeBrowsingService->isSafe($validatedData['url'], true);
+
+        if(true !== $isSafe) {
+            return redirect()->intended('/urls')->with([
+                'status' => false,
+                'message' => 'This is not a safe URL. It has been reported as ' . $isSafe . '. Please try another URL.'
+            ]);
+        }
 
         ShortLink::create([
             'user_id' => $user->id,

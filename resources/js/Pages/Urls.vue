@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import md5 from "md5";
-import { Link, Head, usePage, useForm } from "@inertiajs/inertia-vue3";
+import { useForm } from "@inertiajs/inertia-vue3";
 import icons from "../utilities/icons";
 import fn from "../utilities/functions";
 import Layout from "../components/Layout.vue";

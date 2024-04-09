@@ -29,8 +29,7 @@ const props = defineProps({
         <li>
           <Link href="/urls"
             class="p-2.5 mt-2 flex items-center justify-between rounded-md px-4 duration-300 hover:bg-white hover:text-[#1E1E3C]"
-            :class="$page.url == '/urls' ? 'bg-white text-[#1E1E3C]' : 'text-white'
-    ">
+            :class="$page.url == '/urls' ? 'bg-white text-[#1E1E3C]' : 'text-white'">
           <div class="flex items-center">
             <span class="w-4 h-4" v-html="icons.urls"></span><span class="text-[15px] ml-2">Urls</span>
           </div>
@@ -39,8 +38,7 @@ const props = defineProps({
         <li>
           <Link href="/profile"
             class="p-2.5 mt-2 flex items-center justify-between rounded-md px-4 duration-300 hover:bg-white hover:text-[#1E1E3C]"
-            :class="$page.url == '/profile' ? 'bg-white text-[#1E1E3C]' : 'text-white'
-    ">
+            :class="$page.url == '/profile' ? 'bg-white text-[#1E1E3C]' : 'text-white'">
           <div class="flex items-center">
             <span class="w-4 h-4" v-html="icons.profile"></span><span class="text-[15px] ml-2">Profile</span>
           </div>

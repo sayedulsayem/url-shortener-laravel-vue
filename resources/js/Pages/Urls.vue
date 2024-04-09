@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import md5 from "md5";
 import { Link, Head, usePage, useForm } from "@inertiajs/inertia-vue3";
 import icons from "../utilities/icons";
+import fn from "../utilities/functions";
 import Layout from "../components/Layout.vue";
 
 const props = defineProps({
@@ -51,7 +52,8 @@ const deleteUrl = (id) => {
               class="form-control py-4 px-4 block w-full text-[15px] font-[400] text-gray-700 bg-white border border-solid border-[#E0E0E0] rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-gray-700 focus:outline-none"
               placeholder="Enter site url" />
             <div v-if="form.errors.url" class="text-sm text-[#E8374D] mt-2">{{ form.errors.url }}</div>
-            <div v-if="$page.props.flash.message" class="text-sm text-[#E8374D] mt-2">{{ $page.props.flash.message }}
+            <div v-if="$page.props.flash.message" class="text-sm mt-2"
+              :class="$page.props.flash.status ? 'text-[#27AE60]' : 'text-[#E8374D]'">{{ $page.props.flash.message }}
             </div>
           </div>
           <div>
@@ -95,8 +97,8 @@ const deleteUrl = (id) => {
               </td>
               <td class="px-4 py-3 column-description desc">
                 <div class="plugin-description text-gray-600 flex justify-start items-center">
-                  <span>{{ $page.props.appUrl + '/' + url.code }}</span>
-                  <span @click="copyToClipboard($event, $page.props.appUrl + '/' + url.code)"
+                  <span>{{ fn.getShortUrl($page.props.appUrl, url.code, $page.props.auth.user) }}</span>
+                  <span @click="copyToClipboard($event, fn.getShortUrl($page.props.appUrl, url.code, $page.props.auth.user))"
                     class="ml-4 text-gray-400 relative flex flex-col items-center cursor-pointer group focus:ring-0">
                     <span class="h-4 w-4" v-html="icons.copy"></span>
                     <div class="absolute bottom-0 flex-col items-center hidden mb-6 group-hover:flex">
@@ -124,7 +126,9 @@ const deleteUrl = (id) => {
                 </span>
               </td>
             </tr>
-            <tr v-if="urls.length <= 0"><td class="px-4 py-3 text-center" colspan="4">No data found.</td></tr>
+            <tr v-if="urls.length <= 0">
+              <td class="px-4 py-3 text-center" colspan="4">No data found.</td>
+            </tr>
           </tbody>
         </table>
       </div>

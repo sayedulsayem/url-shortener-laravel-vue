@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { Link, Head, usePage } from "@inertiajs/inertia-vue3";
 import icons from "../utilities/icons";
+import fn from "../utilities/functions";
 import Layout from "../components/Layout.vue";
 const props = defineProps({
   statistics: Object,
@@ -123,13 +124,15 @@ const countTotalVisitors = (data) => {
               </td>
               <td class="px-4 py-3">
                 <div class="text-gray-600 flex justify-start items-center">
-                  <span>{{ $page.props.appUrl + '/' + statistic.code }}</span>
-                  <span @click="copyToClipboard($event, $page.props.appUrl + '/' + statistic.code)"
+                  <span>{{ fn.getShortUrl($page.props.appUrl, statistic.code, $page.props.auth.user) }}</span>
+                  <span
+                    @click="copyToClipboard($event, fn.getShortUrl($page.props.appUrl, statistic.code, $page.props.auth.user))"
                     class="ml-4 text-gray-400 relative flex flex-col items-center cursor-pointer group focus:ring-0">
                     <span class="h-4 w-4" v-html="icons.copy"></span>
                     <div class="absolute bottom-0 flex-col items-center hidden mb-6 group-hover:flex">
-                      <span class="relative z-10 p-2 text-xs text-white bg-black whitespace-nowrap rounded-md">{{
-      copyText }}</span>
+                      <span class="relative z-10 p-2 text-xs text-white bg-black whitespace-nowrap rounded-md">
+                        {{ copyText }}
+                      </span>
                       <div class="w-3 h-3 -mt-2 rotate-45 bg-black"></div>
                     </div>
                   </span>

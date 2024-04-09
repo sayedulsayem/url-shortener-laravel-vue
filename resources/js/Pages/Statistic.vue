@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { Link, Head, usePage } from "@inertiajs/inertia-vue3";
 import icons from "../utilities/icons";
+import fn from "../utilities/functions";
 import Layout from "../components/Layout.vue";
 const props = defineProps({
     visitors: Object,
@@ -45,7 +46,8 @@ const getCounterText = () => {
                         <tr v-for="visitor in visitors" :key="visitor.id" class="border-b border-gray-200 py-10">
                             <td class="px-4 py-3 column-description desc">
                                 <div class="plugin-description text-gray-600 flex justify-start items-center">
-                                    <span>{{ $page.props.appUrl + '/' + visitor.link.code }}</span>
+                                    <span>{{ fn.getShortUrl($page.props.appUrl, visitor.link.code,
+                        $page.props.auth.user) }}</span>
                                 </div>
                             </td>
                             <td class="px-4 py-3 plugin-title column-primary" width="40%">
@@ -57,7 +59,9 @@ const getCounterText = () => {
                                 </div>
                             </td>
                         </tr>
-                        <tr v-if="visitors.length <= 0"><td class="px-4 py-3 text-center" colspan="4">No data found.</td></tr>
+                        <tr v-if="visitors.length <= 0">
+                            <td class="px-4 py-3 text-center" colspan="4">No data found.</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

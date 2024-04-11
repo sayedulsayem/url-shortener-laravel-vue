@@ -25,7 +25,7 @@ const updateUserInfo = () => {
     <div class="bg-white rounded-md p-5">
       <form @submit.prevent="updateUserInfo" class="w-6/12 mx-auto my-0 pt-10">
         <div class="mb-5">
-          <label class="mb-2 block">Name: </label>
+          <label class="mb-2 block">Name </label>
           <input v-model="form.name" type="text"
             class="w-full px-4 py-3 text-sm border border-[#E0E0E0] rounded-md focus:border-[#1E1E3C] focus:outline-none focus:ring-1 focus:ring-[#1E1E3C]"
             placeholder="Name" />
@@ -34,7 +34,7 @@ const updateUserInfo = () => {
           </div>
         </div>
         <div class="mb-5">
-          <label class="mb-2 block">Username: </label>
+          <label class="mb-2 block">Username </label>
           <input v-model="form.username" type="text"
             class="w-full px-4 py-3 text-sm border border-[#E0E0E0] rounded-md focus:border-[#1E1E3C] focus:outline-none focus:ring-1 focus:ring-[#1E1E3C]"
             placeholder="Username" />
@@ -43,7 +43,7 @@ const updateUserInfo = () => {
           </div>
         </div>
         <div class="mb-5">
-          <label class="mb-2 block">Email: </label>
+          <label class="mb-2 block">Email </label>
           <input :value="form.email" type="email"
             class="w-full px-4 py-3 text-sm border border-[#E0E0E0] rounded-md focus:border-[#1E1E3C] focus:outline-none focus:ring-1 focus:ring-[#1E1E3C]"
             disabled placeholder="Email" />
@@ -52,7 +52,7 @@ const updateUserInfo = () => {
           </div>
         </div>
         <div class="mb-5">
-          <label class="mb-2 block">Old Password: </label>
+          <label class="mb-2 block">Old Password </label>
           <input v-model="form.old_password"
             class="w-full px-4 py-3 text-sm border border-[#E0E0E0] rounded-md focus:border-[#1E1E3C] focus:outline-none focus:ring-1 focus:ring-[#1E1E3C]"
             placeholder="Old Password" type="password" />
@@ -61,7 +61,7 @@ const updateUserInfo = () => {
           </div>
         </div>
         <div class="mb-5">
-          <label class="mb-2 block">New Password: </label>
+          <label class="mb-2 block">New Password </label>
           <input v-model="form.password"
             class="w-full px-4 py-3 text-sm border border-[#E0E0E0] rounded-md focus:border-[#1E1E3C] focus:outline-none focus:ring-1 focus:ring-[#1E1E3C]"
             placeholder="Password" type="password" />
@@ -70,7 +70,7 @@ const updateUserInfo = () => {
           </div>
         </div>
         <div class="mb-5">
-          <label class="mb-2 block">Confirm Password: </label>
+          <label class="mb-2 block">Confirm Password </label>
           <input v-model="form.password_confirmation"
             class="w-full px-4 py-3 text-sm border border-[#E0E0E0] rounded-md focus:border-[#1E1E3C] focus:outline-none focus:ring-1 focus:ring-[#1E1E3C]"
             placeholder="Confirm Password" type="password" />
@@ -85,10 +85,10 @@ const updateUserInfo = () => {
               <input v-model="form.use_prefix" id="use_prefix" type="checkbox"
                 class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" />
             </div>
-            <label for="use_prefix" class="ml-2 text-sm font-medium text-[#1E1E3C]">Use Username as prefix on Short
-              Urls</label>
+            <label for="use_prefix" class="ml-2 text-sm font-medium text-[#1E1E3C]">Use username as prefix on short
+              URLs</label>
           </div>
-          <div v-if="form.use_prefix" class="text-sm text-gray mt-3">Your short url will be like
+          <div v-if="form.use_prefix" class="text-sm text-gray mt-3">Your short URL will be like
             <code>{{ $page.props.appUrl + "/" + form.username + "/<code>" }}</code>
           </div>
           <div v-if="form.errors.use_prefix" class="text-sm text-[#E8374D] mt-2">
@@ -109,4 +109,3 @@ const updateUserInfo = () => {
     </div>
   </Layout>
 </template>
-<style scoped></style>

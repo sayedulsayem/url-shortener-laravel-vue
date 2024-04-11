@@ -18,9 +18,9 @@ class UserSeeder extends Seeder
         User::where('id', '>', 0)->delete();
 
         User::create([
-            'name' => 'Sayedul Sayem',
-            'username' => 'sayedulsayem',
-            'email' => 'sayedulsayem@gmail.com',
+            'name' => 'Sayem',
+            'username' => 'sayem',
+            'email' => 'sayem@gmail.com',
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('sayem'),
         ]);

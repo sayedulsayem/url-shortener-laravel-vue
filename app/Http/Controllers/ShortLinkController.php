@@ -28,10 +28,10 @@ class ShortLinkController extends Controller {
     public function show(Request $request, $code) {
         $shortLink = ShortLink::where('code', $code)->first();
 
-        if(!$shortLink){
+        if (!$shortLink) {
             return Redirect::back()->with([
                 'status' => false,
-                'message' => 'Cannot find element with code short ' . $code
+                'message' => 'The Short URL does not exist'
             ], 404);
         }
 
@@ -49,10 +49,10 @@ class ShortLinkController extends Controller {
     public function prefixShow(Request $request, $username, $code) {
         $user = User::where('username', $username)->first();
 
-        if(!$user){
+        if (!$user) {
             return Redirect::back()->with([
                 'status' => false,
-                'message' => 'Cannot find element with username ' . $username
+                'message' => 'The Short URL does not exist'
             ], 404);
         }
 
@@ -61,10 +61,10 @@ class ShortLinkController extends Controller {
             ['user_id', $user->id]
         ])->first();
 
-        if(!$shortLink){
+        if (!$shortLink) {
             return Redirect::back()->with([
                 'status' => false,
-                'message' => 'Cannot find element with code short ' . $code
+                'message' => 'The Short URL does not exist'
             ], 404);
         }
 
@@ -83,10 +83,10 @@ class ShortLinkController extends Controller {
         $user = $request->user();
         $shortLink = ShortLink::where('user_id', $user->id)->where('id', $id)->first();
 
-        if(!$shortLink){
+        if (!$shortLink) {
             return Redirect::back()->with([
                 'status' => false,
-                'message' => 'Cannot find element with id ' . $id
+                'message' => 'The Short URL does not exist'
             ], 404);
         }
 
@@ -94,7 +94,7 @@ class ShortLinkController extends Controller {
 
         return redirect()->intended('/urls')->with([
             'status' => true,
-            'message' => 'The URL has been deleted'
+            'message' => 'The Short URL has been deleted'
         ]);
     }
 
@@ -103,13 +103,22 @@ class ShortLinkController extends Controller {
         $user = $request->user();
 
         $validatedData = $request->validate([
-            'url' => 'required|url|unique:short_links',
+            'url' => 'required|url',
         ]);
+
+        $shortLink = ShortLink::where('url', $validatedData['url'])->first();
+
+        if ($shortLink) {
+            return redirect()->intended('/urls')->with([
+                'status' => false,
+                'message' => 'This URL has already been shorted. The short URL is ' . $this->getShortUrl($shortLink->code, $user) . ''
+            ]);
+        }
 
         $safeBrowsingService = new GoogleSafeBrowsingService();
         $isSafe = $safeBrowsingService->isSafe($validatedData['url'], true);
 
-        if(true !== $isSafe) {
+        if (true !== $isSafe) {
             return redirect()->intended('/urls')->with([
                 'status' => false,
                 'message' => 'This is not a safe URL. It has been reported as ' . $isSafe . '. Please try another URL.'
@@ -141,5 +150,12 @@ class ShortLinkController extends Controller {
         } while (ShortLink::where('code', $code)->exists());
 
         return $code;
+    }
+
+    public function getShortUrl($code, $user) {
+        if ($user->use_prefix === 1) {
+            return url('/') . "/$user->username/$code";
+        }
+        return url('/') . "/$code";
     }
 }

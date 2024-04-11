@@ -18,11 +18,6 @@ const store = () => {
   form.reset();
 };
 
-const getCounterText = () => {
-  const urls = props.urls.length;
-  return (urls > 1) ? `${urls} URLs` : `${urls} URL`;
-}
-
 const copyText = ref('Copy');
 const copyToClipboard = (event, text) => {
   navigator.clipboard.writeText(text);
@@ -49,7 +44,7 @@ const deleteUrl = (id) => {
           <div class="relative w-full mr-3">
             <input v-model="form.url" type="text"
               class="form-control py-4 px-4 block w-full text-[15px] font-[400] text-gray-700 bg-white border border-solid border-[#E0E0E0] rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-gray-700 focus:outline-none"
-              placeholder="Enter site url" />
+              placeholder="Enter site URL" />
             <div v-if="form.errors.url" class="text-sm text-[#E8374D] mt-2">{{ form.errors.url }}</div>
             <div v-if="$page.props.flash.message" class="text-sm mt-2"
               :class="$page.props.flash.status ? 'text-[#27AE60]' : 'text-[#E8374D]'">{{ $page.props.flash.message }}
@@ -58,7 +53,7 @@ const deleteUrl = (id) => {
           <div>
             <input type="submit"
               class="cursor-pointer text-white bg-[#D54752] hover:bg-[#4c5564] focus:ring-[#4c5564] font-bold rounded px-8 py-4 text-[16px] text-center focus:outline-none focus:ring-0"
-              value="Add Url" />
+              value="Add URL" />
           </div>
         </div>
       </form>
@@ -69,33 +64,33 @@ const deleteUrl = (id) => {
               <h2>Your Short URLs</h2>
             </div>
           </div>
-          <p><span>{{ getCounterText() }}</span></p>
+          <p><span>{{ fn.getCounterText(urls.length, 'URL') }}</span></p>
         </h2>
-        <table class="table-auto w-full plugins">
+        <table class="table-auto w-full">
           <thead>
             <tr class="border-b-gray-300 border-b text-sm text-gray-700 text-left">
-              <th scope="col" id="name" class="px-4 py-3 text-gray-500 manage-column column-name column-primary"
+              <th scope="col" class="px-4 py-3 text-gray-500"
                 style="width: 40%">
                 Original URL
               </th>
-              <th scope="col" id="description" class="px-4 py-3 text-gray-500 manage-column column-description">
+              <th scope="col" class="px-4 py-3 text-gray-500">
                 Short URL
               </th>
-              <th scope="col" id="description" class="px-4 py-3 text-gray-500 manage-column column-description">
-                Views
+              <th scope="col" class="px-4 py-3 text-gray-500">
+                Visitors
               </th>
-              <th scope="col" id="auto-updates" class="px-4 py-3 text-gray-500 manage-column column-auto-updates">
+              <th scope="col" class="px-4 py-3 text-gray-500 column-auto-updates">
                 Action
               </th>
             </tr>
           </thead>
           <tbody id="the-tokens" class="text-sm font-normal text-gray-700">
             <tr v-for="url in urls" :key="url.id" class="border-b border-gray-200 py-10">
-              <td class="px-4 py-3 plugin-title column-primary" width="40%">
+              <td class="px-4 py-3" width="40%">
                 <span class="text-gray-600">{{ url.url }}</span>
               </td>
-              <td class="px-4 py-3 column-description desc">
-                <div class="plugin-description text-gray-600 flex justify-start items-center">
+              <td class="px-4 py-3">
+                <div class="text-gray-600 flex justify-start items-center">
                   <span>{{ fn.getShortUrl($page.props.appUrl, url.code, $page.props.auth.user) }}</span>
                   <span @click="copyToClipboard($event, fn.getShortUrl($page.props.appUrl, url.code, $page.props.auth.user))"
                     class="ml-4 text-gray-400 relative flex flex-col items-center cursor-pointer group focus:ring-0">
@@ -108,8 +103,8 @@ const deleteUrl = (id) => {
                   </span>
                 </div>
               </td>
-              <td class="px-4 py-3 column-description desc">
-                <div class="plugin-description text-gray-600">
+              <td class="px-4 py-3">
+                <div class="text-gray-600">
                   <p>{{ url.statistics.length }}</p>
                 </div>
               </td>
@@ -134,4 +129,3 @@ const deleteUrl = (id) => {
     </div>
   </Layout>
 </template>
-<style scoped></style>

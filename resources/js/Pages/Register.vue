@@ -90,4 +90,3 @@ const register = () => {
     </div>
   </div>
 </template>
-<style scoped></style>

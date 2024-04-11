@@ -18,46 +18,14 @@ class StatisticController extends Controller {
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create() {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request, $id) {
-        //
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(Request $request, $id) {
         $user = $request->user();
-        $visitors = Statistic::with('link')->get();
+        $visitors = Statistic::with(['link' => function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        }])->where('short_link_id', $id)->get();
+
         return Inertia::render('Statistic', ['visitors' => $visitors]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Statistic $statistic) {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Statistic $statistic) {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Statistic $statistic) {
-        //
     }
 }

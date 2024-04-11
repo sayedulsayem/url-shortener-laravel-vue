@@ -2,9 +2,6 @@
 import { Link, Head } from "@inertiajs/inertia-vue3";
 import icons from "../utilities/icons";
 import md5 from "md5";
-const props = defineProps({
-  user: Object,
-});
 </script>
 
 <template>

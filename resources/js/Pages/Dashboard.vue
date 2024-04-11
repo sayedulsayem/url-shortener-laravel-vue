@@ -7,10 +7,9 @@ import Layout from "../components/Layout.vue";
 const props = defineProps({
   statistics: Object,
 });
-const getCounterText = () => {
-  const statistics = props.statistics.length;
-  return (statistics > 1) ? `${statistics} URLs` : `${statistics} URL`;
-}
+
+const visitors = fn.countVisitors(props.statistics);
+
 const copyText = ref('Copy');
 const copyToClipboard = (event, text) => {
   navigator.clipboard.writeText(text);
@@ -18,30 +17,6 @@ const copyToClipboard = (event, text) => {
   setTimeout(() => {
     copyText.value = 'Copy';
   }, 2000);
-}
-
-const countUniqueVisitors = (data) => {
-  const uniqueIps = new Set();
-
-  for (const item of data) {
-    for (const stat of item.statistics) {
-      uniqueIps.add(stat.ip_address);
-    }
-  }
-
-  return uniqueIps.size;
-}
-
-const countTotalVisitors = (data) => {
-  let visitorCount = 0;
-
-  for (const item of data) {
-    for (const stat of item.statistics) {
-      visitorCount++;
-    }
-  }
-
-  return visitorCount;
 }
 </script>
 <template>
@@ -54,9 +29,9 @@ const countTotalVisitors = (data) => {
               class="bg-[#E79073] text-white p-2 rounded-md rounded-r-none w-20 h-full flex items-center justify-center">
               <span class="h-6 w-6" v-html="icons.eye"></span>
             </div>
-            <div class="cursor-pointer py-5">
-              <h2 class="font-bold text-xl text-[#E79073]">{{ countUniqueVisitors(statistics) }}</h2>
-              <span class="flex text-[15px] items-center space-x-1 text-[#636363]">Unique Visitors</span>
+            <div class="py-5">
+              <h2 class="font-bold text-xl text-[#E79073]">{{ visitors.unique }}</h2>
+              <span class="flex text-[15px] items-center space-x-1 text-[#636363]">Unique {{ fn.getCounterText(visitors.unique, 'Visitor', false) }}</span>
             </div>
           </div>
         </div>
@@ -68,9 +43,9 @@ const countTotalVisitors = (data) => {
               class="bg-[#E8374D] text-white p-2 rounded-md rounded-r-none w-20 h-full flex items-center justify-center">
               <span class="h-6 w-6" v-html="icons.users"></span>
             </div>
-            <div class="cursor-pointer">
-              <h2 class="font-bold text-xl text-[#E8374D]">{{ countTotalVisitors(statistics) }}</h2>
-              <span class="flex text-[15px] items-center space-x-1 text-[#636363]">Visitors</span>
+            <div class="py-5">
+              <h2 class="font-bold text-xl text-[#E8374D]">{{ visitors.total }}</h2>
+              <span class="flex text-[15px] items-center space-x-1 text-[#636363]">{{ fn.getCounterText(visitors.total, 'Visitor', false) }}</span>
             </div>
           </div>
         </div>
@@ -82,9 +57,9 @@ const countTotalVisitors = (data) => {
               class="bg-[#1DB3C9] text-white p-2 rounded-md rounded-r-none w-20 h-full flex items-center justify-center">
               <span class="h-5 w-5" v-html="icons.urls"></span>
             </div>
-            <div class="cursor-pointer">
+            <div class="py-5">
               <h2 class="font-bold text-xl text-[#1DB3C9]">{{ statistics.length }}</h2>
-              <span class="flex text-[15px] items-center space-x-1 text-[#636363]">Urls</span>
+              <span class="flex text-[15px] items-center space-x-1 text-[#636363]">{{ fn.getCounterText(statistics.length, 'URL', false) }}</span>
             </div>
           </div>
         </div>
@@ -98,9 +73,9 @@ const countTotalVisitors = (data) => {
               <h2>Your Statistics</h2>
             </div>
           </div>
-          <p><span>{{ getCounterText() }}</span></p>
+          <p><span>{{ fn.getCounterText(statistics.length, 'URL') }}</span></p>
         </h2>
-        <table class="table-auto w-full plugins">
+        <table class="table-auto w-full">
           <thead>
             <tr class="border-b-gray-300 border-b text-sm text-gray-700 text-left">
               <th scope="col" class="px-4 py-3 text-gray-500" style="width: 40%">
@@ -110,7 +85,7 @@ const countTotalVisitors = (data) => {
                 Short URL
               </th>
               <th scope="col" class="px-4 py-3 text-gray-500">
-                Views
+                Visitors
               </th>
               <th scope="col" class="px-4 py-3 text-gray-500">
                 Action
@@ -158,4 +133,3 @@ const countTotalVisitors = (data) => {
     </div>
   </Layout>
 </template>
-<style scoped></style>

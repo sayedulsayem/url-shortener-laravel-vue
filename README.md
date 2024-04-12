@@ -54,4 +54,4 @@ The default login email will be `sayem@gmail.com`
 and the default password will be `sayem`
 
 ### Some explanations
-- about the short url, The short url can generated with username prefix which is nearest feature to include some folder.
+- about the short url, The short url can generated with username prefix which is nearest feature to work from some folder.
